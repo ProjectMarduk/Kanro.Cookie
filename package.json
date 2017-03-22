@@ -1,0 +1,20 @@
+{
+  "name": "kanro.cookie",
+  "version": "1.0.0-dev.2",
+  "description": "Cookie middleware for Kanro",
+  "main": "./index.js",
+  "typings": "./index",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "higan@live.cn",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/cookie": "^0.1.29",
+    "@types/node": "^7.0.7"
+  },
+  "dependencies": {
+    "cookie": "^0.3.1",
+    "kanro.core": "^1.0.0-dev.32"
+  }
+}
