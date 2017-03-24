@@ -1,11 +1,21 @@
 import * as CookieCore from "cookie";
 import { Kanro } from "kanro.core";
 
+declare module "kanro.core" {
+    namespace Kanro {
+        namespace Core {
+            interface IRequest {
+                cookies: { [name: string]: string };
+            }
+        }
+    }
+}
+
 export namespace Cookie {
     export class CookieParser extends Kanro.BaseRequestHandler {
         async handler(request: Kanro.Core.IRequest): Promise<Kanro.Core.IRequest> {
             if (request.header["cookie"] != undefined) {
-                request["cookies"] = CookieCore.parse(request.header["cookie"]);
+                request.cookies = CookieCore.parse(request.header["cookie"]);
             }
             return request;
         }
