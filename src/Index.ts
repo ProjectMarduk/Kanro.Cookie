@@ -1,28 +1,28 @@
 import * as CookieCore from "cookie";
-import { Kanro } from "kanro.core";
+import { Kanro } from "kanro";
 
-declare module "kanro.core" {
+declare module "kanro" {
     namespace Kanro {
-        namespace Core {
+        namespace Http {
             interface IRequest {
-                cookies: { [name: string]: string };
+                cookies?: { [name: string]: string };
             }
         }
     }
 }
 
 export namespace Cookie {
-    export class CookieParser extends Kanro.BaseRequestHandler {
-        async handler(request: Kanro.Core.IRequest): Promise<Kanro.Core.IRequest> {
+    export class CookieParser extends Kanro.Executors.BaseRequestHandler {
+        async handler(request: Kanro.Http.IRequest): Promise<Kanro.Http.IRequest> {
             if (request.header["cookie"] != undefined) {
                 request.cookies = CookieCore.parse(request.header["cookie"]);
             }
             return request;
         }
-        type: Kanro.Core.ExecutorType.RequestHandler = Kanro.Core.ExecutorType.RequestHandler;
+        type: Kanro.Executors.ExecutorType.RequestHandler = Kanro.Executors.ExecutorType.RequestHandler;
         name: string = "CookieParser";
 
-        constructor(config: Kanro.Config.IRequestHandlerConfig) {
+        constructor(config: Kanro.Containers.IRequestHandlerContainer) {
             super(config);
         }
     }
@@ -30,8 +30,8 @@ export namespace Cookie {
     export class KanroCookieModule implements Kanro.Core.IModule {
         dependencies: Kanro.Core.IModuleInfo[];
 
-        executorInfos: { [name: string]: Kanro.Core.IExecutorInfo; };
-        async getExecutor(config: Kanro.Config.IExecutorConfig): Promise<Kanro.Core.IExecutor> {
+        executorInfos: { [name: string]: Kanro.Executors.IExecutorInfo; };
+        async getExecutor(config: Kanro.Containers.IRequestHandlerContainer): Promise<Kanro.Executors.IExecutor> {
             if (config.name == "CookieParser") {
                 return new CookieParser(<any>config);
             }
@@ -39,7 +39,7 @@ export namespace Cookie {
         }
 
         public constructor() {
-            this.executorInfos = { CookieParser: { type: Kanro.Core.ExecutorType.RequestHandler, name: "CookieParser" } };
+            this.executorInfos = { CookieParser: { type: Kanro.Executors.ExecutorType.RequestHandler, name: "CookieParser" } };
         }
     }
 }

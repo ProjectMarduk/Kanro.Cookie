@@ -11,10 +11,10 @@
   "license": "MIT",
   "devDependencies": {
     "@types/cookie": "^0.1.29",
-    "@types/node": "^7.0.7"
+    "@types/node": "^7.0.7",
+    "kanro": "^1.0.0-dev.0"
   },
   "dependencies": {
-    "cookie": "^0.3.1",
-    "kanro.core": "^1.0.0-dev.32"
+    "cookie": "^0.3.1"
   }
 }
